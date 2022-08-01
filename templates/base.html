@@ -1,0 +1,65 @@
+<html>
+    <head>
+ 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background: linear-gradient(-45deg, #5a534f, #635359, #2f434a, #232926);
+  font-family: cursive;
+}
+
+.blue{
+    color: #dfdfdf
+}
+ 
+.glow {
+  font-size: 30px;
+  color: #ffffff;
+  text-align: center;
+  -webkit-animation: glow 1s ease-in-out infinite alternate;
+  -moz-animation: glow 1s ease-in-out infinite alternate;
+  animation: glow 1s ease-in-out infinite alternate;
+}
+ 
+@-webkit-keyframes glow {
+  from {
+    text-shadow: 0 0 10px #fff, 0 0 20px #614444, 0 0 30px #5c93d8, 0 0 40px #4f5c58, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;
+  }
+ 
+  to {
+    text-shadow: 0 0 20px #fff, 0 0 30px #2f6114, 0 0 40px #59692a, 0 0 50px #585458, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+  }
+}
+</style>
+ 
+        {% if title %}
+        <title>{{ title }} - HappyCooking</title>
+        {% else %}
+        <title>Welcome to HappyCooking</title>
+        {% endif %}
+    </head>
+    <body>
+           <div>
+      <center><h3 class="blue">HappyCooking</h3><center>
+      <center class="glow">&#129383;</center>
+      <a class="blue pull-left" href="{{ url_for('index') }}">Home</a>
+      {% if current_user.is_anonymous %}
+      <a class="blue pull-right" href="{{ url_for('login') }}">Login</a>
+      {% else %}
+      <a class="blue pull-right" href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+      <a class="blue pull-left" href="{{ url_for('logout') }}">Logout</a>
+      {% endif %}
+    </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+ 
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>
